@@ -17,21 +17,29 @@ class NameForm(FlaskForm):
   email = StringField('What is your UofT Email address?', validators=[Email()])
   submit = SubmitField('Submit')
   def validate_email(form, field):
+    form.uoftNotValid=False
+    if "@" not in field.data:
+      raise ValidationError('Please include @ in the email.')
     if "utoronto" not in field.data:
+      form.uoftNotValid=True
       raise ValidationError('Please use your UofT email.')
+
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
   form = NameForm()
   if form.validate_on_submit():
+    
     old_name = session.get('name')
     if old_name is not None and old_name != form.name.data:
       flash('Looks like you have changed your name!')
     session['name'] = form.name.data
+    
     old_email = session.get('email')
     if old_email is not None and old_email != form.email.data:
       flash('Looks like you have changed your email!')
     session['email'] = form.email.data
+    
     return redirect(url_for('index'))
   return render_template('index.html', form=form, name=session.get('name'), email=session.get('email'))
     
