@@ -2,3 +2,7 @@
 # This repo is a clone of https://github.com/miguelgrinberg/flasky
 
 #Start of Lab 3 which is a continuation of Lab 1 Activity 4
+
+#Activity 1: Lab 3 Branch
+
+#Activity 2: Docker Installationn
